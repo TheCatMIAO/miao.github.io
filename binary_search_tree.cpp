@@ -44,10 +44,10 @@ Node *insert(Node *root, int key){
         //root->key = key;
         //root->lchild = root->rchild = NULL;
         //return root;
-        //-------
+        //---------------
         //root = getNewNode(key);
         //return root;
-        //-------
+        //---------------
         return getNewNode(key);
     }
     if(key == root->key) return root;
@@ -64,18 +64,23 @@ Node *findPre(Node *root){
 
 Node *erase(Node *root, int key){
     if(root == NULL) return NULL;
-    if(key < root->key) erase(root->lchild, key);
-    else if(key > root->key) erase(root->rchild, key);
+    if(key < root->key) root->lchild = erase(root->lchild, key);
+    else if(key > root->key) root->rchild = erase(root->rchild, key);
     else {
         if(root->lchild == NULL||root->rchild == NULL){
-            root = root->lchild ? root->lchild : root->rchild;
-            return root;
+            //此处和38到51行同理
+            //root = root->lchild ? root->lchild : root->rchild;
+            //return root;
+            //--------------------
+            return root->lchild ? root->lchild : root->rchild;
         }else{
             Node *pre = findPre(root->lchild);
             root->key = pre->key;
-            erase(root->lchild, pre->key);
+            root->lchild = erase(root->lchild, pre->key);
+            //erase(root->lchild, pre->key);这样写会出错，必须挂起
         }
     }
+    return root;
 }
 
 void output_tree(Node *root){
