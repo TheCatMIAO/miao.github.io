@@ -43,8 +43,12 @@ Node *insert(Node *root, int key){
         //root = (Node*)malloc(sizeof(Node));
         //root->key = key;
         //root->lchild = root->rchild = NULL;
-        root = getNewNode(key);
-        return root;
+        //return root;
+        //-------
+        //root = getNewNode(key);
+        //return root;
+        //-------
+        return getNewNode(key);
     }
     if(key == root->key) return root;
     if(key < root->key) root->lchild = insert(root->lchild, key);//特别重要的一步
